@@ -148,4 +148,48 @@ public class Sort {
         //对基准值右边的递归排序
         quickSort(arr,leftIndex+1,right);
     }
+
+    /**
+     * 堆排序 升序 时间复杂度 o(nlogn)
+     * @param arr
+     */
+    public static void heapSort(Integer[] arr){
+        if(arr==null || arr.length==0){
+            return;
+        }
+        //先构建大顶堆
+        for(int i=arr.length/2-1;i>=0;i--){
+            adjustHeap(arr,i,arr.length);
+        }
+
+        for(int i=arr.length-1;i>0;i--){
+            //将arr[i]和arr[0]交换
+            int temp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = temp;
+            //调整剩下n-1个元素 构建大顶堆
+            adjustHeap(arr,0,i);
+        }
+    }
+
+    public static void adjustHeap(Integer[] arr,int i,int length){
+        int leftIndex = 2*i+1;
+        int rightIndex = leftIndex + 1;
+        int largest = i;
+
+        if(leftIndex < length && arr[leftIndex]>arr[largest]){
+            largest = leftIndex;
+        }
+
+        if(rightIndex < length && arr[rightIndex]>arr[largest]){
+            largest = rightIndex;
+        }
+
+        if(largest!=i){
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+            adjustHeap(arr,largest,length);
+        }
+    }
 }
